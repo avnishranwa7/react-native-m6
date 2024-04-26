@@ -12,6 +12,7 @@ export default SafeView;
 
 const styles = StyleSheet.create({
   safeView: {
+    flex: 1,
     marginTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
   },
 });

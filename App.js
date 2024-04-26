@@ -10,6 +10,7 @@ import CategoriesScreen from "./screens/Categories";
 import MealsOverview from "./screens/MealsOverview";
 import MealDetail from "./screens/MealDetail";
 import Favorites from "./screens/Favorites";
+import FavoritesContextProvider from "./store/context/favorites-context";
 
 const NavStack = createNativeStackNavigator();
 const BottomTab = createBottomTabNavigator();
@@ -52,28 +53,30 @@ export default function App() {
   return (
     <>
       <StatusBar style="light" />
-      <NavigationContainer>
-        <NavStack.Navigator
-          screenOptions={{
-            headerStyle: { backgroundColor: "#351401" },
-            headerTintColor: "white",
-            headerTitleAlign: "center",
-            contentStyle: { backgroundColor: "#3f2f25" },
-          }}
-        >
-          <NavStack.Screen
-            name="Meals Categories"
-            component={TabNavigator}
-            options={{ headerShown: false }}
-          />
-          <NavStack.Screen name="Meals Overview" component={MealsOverview} />
-          <NavStack.Screen
-            name="Meal Details"
-            component={MealDetail}
-            options={{ title: "About the Meal" }}
-          />
-        </NavStack.Navigator>
-      </NavigationContainer>
+      <FavoritesContextProvider>
+        <NavigationContainer>
+          <NavStack.Navigator
+            screenOptions={{
+              headerStyle: { backgroundColor: "#351401" },
+              headerTintColor: "white",
+              headerTitleAlign: "center",
+              contentStyle: { backgroundColor: "#3f2f25" },
+            }}
+          >
+            <NavStack.Screen
+              name="Meals Categories"
+              component={TabNavigator}
+              options={{ headerShown: false }}
+            />
+            <NavStack.Screen name="Meals Overview" component={MealsOverview} />
+            <NavStack.Screen
+              name="Meal Details"
+              component={MealDetail}
+              options={{ title: "About the Meal" }}
+            />
+          </NavStack.Navigator>
+        </NavigationContainer>
+      </FavoritesContextProvider>
     </>
   );
 }

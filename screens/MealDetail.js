@@ -1,21 +1,35 @@
-import { useLayoutEffect } from "react";
+import { useContext, useLayoutEffect, useMemo } from "react";
 import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
 
 // local imports
 import { MEALS } from "../data/dummy-data";
 import SubtitleList from "../components/MealDetail/SubtitleList";
 import IconButton from "../components/IconButton";
+import { FavoritesContext } from "../store/context/favorites-context";
 
 const MealDetail = ({ route, navigation }) => {
+  const { ids, toggleFavorite } = useContext(FavoritesContext);
+
   const id = route.params.id;
   const meal = MEALS.find((m) => m.id === id);
+
+  const isMealFav = useMemo(() => ids.includes(meal.id), [ids, meal]);
+  function toggleMealLike() {
+    toggleFavorite(meal.id);
+  }
 
   useLayoutEffect(
     () =>
       navigation.setOptions({
-        headerRight: () => <IconButton name="star" color="white" />,
+        headerRight: () => (
+          <IconButton
+            name="star"
+            color={isMealFav ? "red" : "white"}
+            onPress={toggleMealLike}
+          />
+        ),
       }),
-    [navigation]
+    [navigation, toggleMealLike]
   );
 
   return (
