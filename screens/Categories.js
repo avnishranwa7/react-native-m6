@@ -3,6 +3,7 @@ import { FlatList } from "react-native";
 // local imports
 import { CATEGORIES } from "../data/dummy-data";
 import CategoryGridTile from "../components/CategoryGridTile";
+import SafeView from "../components/SafeView";
 
 const CategoriesScreen = ({ navigation }) => {
   function renderCategoryItem(item) {
@@ -20,14 +21,14 @@ const CategoriesScreen = ({ navigation }) => {
   }
 
   return (
-    // <View>
-    <FlatList
-      data={CATEGORIES}
-      keyExtractor={(item) => item.id}
-      renderItem={renderCategoryItem}
-      numColumns={2}
-    />
-    // </View>
+    <SafeView>
+      <FlatList
+        data={CATEGORIES}
+        keyExtractor={(item) => item.id}
+        renderItem={renderCategoryItem}
+        numColumns={2}
+      />
+    </SafeView>
   );
 };
 
