@@ -4,13 +4,14 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { MaterialIcons } from "@expo/vector-icons";
+import { Provider } from "react-redux";
 
 // local imports
 import CategoriesScreen from "./screens/Categories";
 import MealsOverview from "./screens/MealsOverview";
 import MealDetail from "./screens/MealDetail";
 import Favorites from "./screens/Favorites";
-import FavoritesContextProvider from "./store/context/favorites-context";
+import { store } from "./store/redux/store";
 
 const NavStack = createNativeStackNavigator();
 const BottomTab = createBottomTabNavigator();
@@ -53,7 +54,8 @@ export default function App() {
   return (
     <>
       <StatusBar style="light" />
-      <FavoritesContextProvider>
+      {/* <FavoritesContextProvider> */}
+      <Provider store={store}>
         <NavigationContainer>
           <NavStack.Navigator
             screenOptions={{
@@ -76,7 +78,8 @@ export default function App() {
             />
           </NavStack.Navigator>
         </NavigationContainer>
-      </FavoritesContextProvider>
+      </Provider>
+      {/* </FavoritesContextProvider> */}
     </>
   );
 }

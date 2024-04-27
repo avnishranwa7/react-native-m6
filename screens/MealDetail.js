@@ -1,21 +1,27 @@
-import { useContext, useLayoutEffect, useMemo } from "react";
+import { useLayoutEffect, useMemo } from "react";
 import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
 
 // local imports
 import { MEALS } from "../data/dummy-data";
 import SubtitleList from "../components/MealDetail/SubtitleList";
 import IconButton from "../components/IconButton";
-import { FavoritesContext } from "../store/context/favorites-context";
+import { toggleFavorites } from "../store/redux/favorites";
 
 const MealDetail = ({ route, navigation }) => {
-  const { ids, toggleFavorite } = useContext(FavoritesContext);
+  const favoriteMealIds = useSelector((state) => state.favoriteMeals.ids);
+  const dispatch = useDispatch();
 
   const id = route.params.id;
   const meal = MEALS.find((m) => m.id === id);
 
-  const isMealFav = useMemo(() => ids.includes(meal.id), [ids, meal]);
+  const isMealFav = useMemo(
+    () => favoriteMealIds.includes(meal.id),
+    [favoriteMealIds, meal]
+  );
+
   function toggleMealLike() {
-    toggleFavorite(meal.id);
+    dispatch(toggleFavorites({ id: meal.id }));
   }
 
   useLayoutEffect(
